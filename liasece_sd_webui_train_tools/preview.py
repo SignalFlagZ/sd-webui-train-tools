@@ -93,18 +93,18 @@ def preview_checkpoint(save_file_path: str, checkpoint_name: str, checkpoint_pat
         return -1
     args = []
     if len(preview_sampling_method) > 1:
-        args+=[find_index_in_current_axis_options("Sampler"), preview_sampling_method.join(",")]
+        args+=[find_index_in_current_axis_options("Sampler"), ",".join(preview_sampling_method),preview_sampling_method]
     if len(preview_sampling_steps.split(",")) > 1:
-        args+=[find_index_in_current_axis_options("Steps"), preview_sampling_steps]
+        args+=[find_index_in_current_axis_options("Steps"), preview_sampling_steps, ""]
     if len(preview_cfg_scale.split(",")) > 1:
-        args+=[find_index_in_current_axis_options("CFG Scale"), preview_cfg_scale]
+        args+=[find_index_in_current_axis_options("CFG Scale"), preview_cfg_scale, ""]
     if len(preview_seed.split(",")) > 1:
-        args+=[find_index_in_current_axis_options("Seed"), preview_seed]
+        args+=[find_index_in_current_axis_options("Seed"), preview_seed, ""]
     if len(preview_lora_multiplier_list) > 1:
-        args+=[find_index_in_current_axis_options("Prompt S/R"), ",".join(lora_prompt_list(checkpoint_name, preview_lora_multiplier_list))]
-    assert len(args) <= 2*3, "Too many xyz_grid parameters to preview"
-    while len(args) < 6:
-        args+=[0, ""]
+        args+=[find_index_in_current_axis_options("Prompt S/R"), ",".join(lora_prompt_list(checkpoint_name, preview_lora_multiplier_list)), ""]
+    assert len(args) <= 3*3, "Too many xyz_grid parameters to preview"
+    while len(args) < 9:
+        args+=[0, "", ""]
     args+=[
         True, # draw_legend
         False, # include_lone_images
