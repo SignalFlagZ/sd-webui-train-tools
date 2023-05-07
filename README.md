@@ -1,5 +1,14 @@
 # sd-webui-train-tools
 
+## Mod
+
+Support for Stable Diffusion web UI V1.1.0.
+No compatibility with earlier versions.
+
+LoRA may not load correctly in preview.
+
+## 
+
 The stable diffusion webui training aid extension helps you quickly and visually train models such as Lora.
 
 一个 stable-diffusion-webui 的训练辅助扩展，可以帮助你快速、直观地训练 Lora 等模型。
