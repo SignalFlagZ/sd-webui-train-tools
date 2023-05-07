@@ -84,6 +84,7 @@ def new_ui():
                             # UI: dateset images post process
                             with gr.Row():
                                 # UI: dateset images post process functional
+                                process_keep_original_size = gr.Checkbox(label='process_keep_original_size', elem_id="process_keep_original_size", interactive = True)
                                 process_flip = gr.Checkbox(label='Create flipped copies', elem_id="process_flip", value=True, interactive = True)
                                 process_split = gr.Checkbox(label='Split oversized images', elem_id="process_split", interactive = True)
                                 process_focal_crop = gr.Checkbox(label='Auto focal point crop', elem_id="process_focal_crop", interactive = True)
@@ -220,6 +221,7 @@ def new_ui():
                 process_width,
                 process_height,
                 preprocess_txt_action,
+                process_keep_original_size,
                 process_flip,
                 process_split,
                 process_caption,
