@@ -393,7 +393,7 @@ class Parser:
         if 'optimizer_args' in args:
             name_space.optimizer_args = []
             for key, value in args['optimizer_args'].items():
-                if key == "betas" and args['optimizer_type'] in {"AdaFactor", "SGDNesterov", "SGDNesterov8bit"}:
+                if key == "betas" and args['optimizer_type'] in {"AdaFactor", "SGDNesterov", "SGDNesterov8bit", "DAdaptation(DAdaptAdam)", "DAdaptAdaGrad", "DAdaptAdan", "DAdaptSGD",}:
                     continue
                 name_space.optimizer_args.append(f"{key}={value}")
 
