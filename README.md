@@ -1,6 +1,7 @@
 # sd-webui-train-tools
 
-The stable diffusion webui training aid extension helps you quickly and visually train models such as Lora.
+The stable diffusion webui training aid extension helps you quickly and visually train models such as Lora.  
+Change subproject commit to 3b1af3f1a63b858af8c12662cbae70654229e327.
 
 一个 stable-diffusion-webui 的训练辅助扩展，可以帮助你快速、直观地训练 Lora 等模型。
 
