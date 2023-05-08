@@ -144,7 +144,7 @@ def new_ui():
                     with gr.Column():
                         train_net_dim = gr.Number(value=128, label="Net dim (128 ~ 144MB)", elem_id="train_net_dim", interactive = True)
                         train_alpha = gr.Number(value=64, label="Alpha (default is half of Net dim)", elem_id="train_alpha", interactive = True)
-                        train_optimizer_type = gr.Dropdown(label="Optimizer type",value=["Lion"], choices=["Adam", "AdamW", "AdamW8bit", "Lion", "SGDNesterov", "SGDNesterov8bit", "DAdaptation", "AdaFactor"], multiselect = True, interactive = True, elem_id="train_optimizer_type")
+                        train_optimizer_type = gr.Dropdown(label="Optimizer type",value=["Lion"], choices=["AdamW", "AdamW8bit", "Lion8bit", "Lion", "SGDNesterov", "SGDNesterov8bit", "DAdaptation(DAdaptAdam)", "DAdaptAdaGrad", "DAdaptAdan", "DAdaptSGD", "AdaFactor"], multiselect = True, interactive = True, elem_id="train_optimizer_type")
                         train_mixed_precision = gr.Dropdown(label="Mixed precision (If your graphics card supports bf16 better)",value="fp16", choices=["fp16", "bf16"], interactive = True, elem_id="train_mixed_precision")
                 with gr.Row():
                     with gr.Column(scale=2):
