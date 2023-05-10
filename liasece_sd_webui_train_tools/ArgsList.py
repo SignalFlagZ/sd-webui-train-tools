@@ -71,7 +71,7 @@ class ArgStore:
         self.learning_rate: Union[float, None] = 1e-4  # AdamW does not require this, some other optimizers do.
         self.unet_lr: Union[float, None] = None  # OPTIONAL, Sets a specific lr for the unet, this overwrites
         # the base lr in AdamW
-        self.text_encoder_lr: Union[float, None] = None  # OPTIONAL, Sets a specific lr for the text encoder,
+        self.text_encoder_lr: Union[float, None] = 5e-5  # OPTIONAL, Sets a specific lr for the text encoder,
         # this overwrites the base lr in AdamW
         self.warmup_lr_ratio: Union[float, None] = None  # OPTIONAL, Calculates the number of warmup steps based on the
         # ratio given. Make sure to set this if you are using
@@ -135,8 +135,8 @@ class ArgStore:
         self.bucket_no_upscale: bool = False  # Disables up-scaling for images in buckets
 
         # tag args
-        self.shuffle_captions: bool = False  # OPTIONAL, False to ignore
-        self.keep_tokens: Union[int, None] = None  # OPTIONAL, None to ignore
+        self.shuffle_captions: bool = True  # OPTIONAL, False to ignore
+        self.keep_tokens: Union[int, None] = 2  # OPTIONAL, None to ignore
 
         # other somewhat useful args
         self.xformers: bool = True
