@@ -89,7 +89,7 @@ def on_train_begin_click(id: str, project: str, version: str,
     for x in sd_models.checkpoints_list.values():
         if x.title == train_base_model:
             train_base_model_path = os.path.join(model_path_for_train(), x.name)
-            train_base_model_name = os.path.splitext(x.name)[0]
+            train_base_model_name = os.path.splitext(os.path.basename(train_base_model_path))[0]
             break
     processed_path = get_project_version_dataset_processed_path(project, version)
     os.makedirs(processed_path, exist_ok=True)
