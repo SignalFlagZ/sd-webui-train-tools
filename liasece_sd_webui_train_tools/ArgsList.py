@@ -135,8 +135,8 @@ class ArgStore:
         self.bucket_no_upscale: bool = False  # Disables up-scaling for images in buckets
 
         # tag args
-        self.shuffle_captions: bool = False  # OPTIONAL, False to ignore
-        self.keep_tokens: Union[int, None] = None  # OPTIONAL, None to ignore
+        self.shuffle_captions: bool = True  # OPTIONAL, False to ignore
+        self.keep_tokens: Union[int, None] = 1  # OPTIONAL, None to ignore
 
         # other somewhat useful args
         self.xformers: bool = True
