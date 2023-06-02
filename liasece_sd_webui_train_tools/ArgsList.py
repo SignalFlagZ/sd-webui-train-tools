@@ -71,7 +71,7 @@ class ArgStore:
         self.learning_rate: Union[float, None] = 1e-4  # AdamW does not require this, some other optimizers do.
         self.unet_lr: Union[float, None] = None  # OPTIONAL, Sets a specific lr for the unet, this overwrites
         # the base lr in AdamW
-        self.text_encoder_lr: Union[float, None] = None  # OPTIONAL, Sets a specific lr for the text encoder,
+        self.text_encoder_lr: Union[float, None] = 5e-5  # OPTIONAL, Sets a specific lr for the text encoder,
         # this overwrites the base lr in AdamW
         self.warmup_lr_ratio: Union[float, None] = None  # OPTIONAL, Calculates the number of warmup steps based on the
         # ratio given. Make sure to set this if you are using
@@ -92,7 +92,7 @@ class ArgStore:
         self.test_seed: int = 23  # this is the "reproducable seed", basically if you set the seed to this,
         # you should be able to input a prompt from one of your training images and
         # get a close representation of it
-        self.mixed_precision: str = "fp16"  # If you have the ability to use bf16, do it, it's better
+        self.mixed_precision: str = "bf16"  # If you have the ability to use bf16, do it, it's better
         self.save_precision: str = "fp16"  # You can also save in bf16, but because it's not universally supported,
         # I suggest you keep saving at fp16
 
@@ -146,7 +146,7 @@ class ArgStore:
         self.v_parameterization: bool = False  # Only is used when v2 is also set and you are using the 768x version of v2
         self.gradient_checkpointing: bool = False  # OPTIONAL, enables gradient checkpointing
         self.gradient_acc_steps: Union[int, None] = None  # OPTIONAL, not sure exactly what this means
-        self.noise_offset: Union[float, None] = None  # OPTIONAL, seems to help allow SD to gen better blacks and whites
+        self.noise_offset: Union[float, None] = 0.1  # OPTIONAL, seems to help allow SD to gen better blacks and whites
         # Kohya recommends, if you have it set, to use 0.1, not sure how
         # high the value can be, I'm going to assume maximum of 1
         # seems to cause baking in outputs with two LoRA using noise offset
