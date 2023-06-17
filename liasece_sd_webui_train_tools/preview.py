@@ -41,6 +41,12 @@ def preview_checkpoint(save_file_path: str, checkpoint_name: str, checkpoint_pat
         return f"<lora:{name}:{multiplier}>"
     def lora_prompt_list(name: str, multiplier_list: list[str]) -> list[str]:
         return [lora_prompt(name, multiplier) for multiplier in multiplier_list]
+    #Rename lora to force loading
+    org_lora = os.path.join(os.path.abspath(os.path.dirname(checkpoint_path)), checkpoint_name + ".safetensors")
+    checkpoint_name = checkpoint_name + "_"+ str(int(round(time.time(), 1)*10))[-5:]
+    tmp_lora = os.path.join(os.path.abspath(os.path.dirname(checkpoint_path)), checkpoint_name + ".safetensors")
+    os.rename(org_lora, tmp_lora)
+
     preview_txt2img_prompt = lora_prompt(checkpoint_name, default_lora_multiplier)+", " + preview_txt2img_prompt
 
     outpath_samples = save_file_path if preview_include_sub_img else None
@@ -126,5 +132,5 @@ def preview_checkpoint(save_file_path: str, checkpoint_name: str, checkpoint_pat
     except Exception as e:
         printD(f"Error while processing {p.prompt}", e)
         print(traceback.format_exc(), file=sys.stderr)
-
+    os.rename(tmp_lora, org_lora)
     shared.cmd_opts.lora_dir = lora_dir
