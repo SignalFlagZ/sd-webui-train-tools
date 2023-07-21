@@ -51,40 +51,44 @@ class ArgStore:
         # vs being occurrence based
 
         # Optimizer args
-        self.optimizer_type: str = "AdaFactor"  # options are AdamW, AdamW8bit, Lion, SGDNesterov,
+        self.optimizer_type: str = "DAdaptAdam"  # options are AdamW, AdamW8bit, Lion, SGDNesterov,
         # SGDNesterov8bit, DAdaptation, AdaFactor
 
         # this is where you add things like weight_decay
         # the values set here are the default I recommend when using AdamW or AdamW8bit
-        self.optimizer_args: Union[dict[str:str], None] = {"weight_decay": "0.1",
-                                                           "betas": "0.9,0.99"}  # List of optional elements that can be used for an optimizer
+        self.optimizer_args: Union[dict[str:str], None] = {"weight_decay": "0.01",
+                                                           "betas": "0.9,0.99",
+                                                           "decouple": "True" }  # List of optional elements that can be used for an optimizer
+        #self.optimizer_args: Union[dict[str:str], None] = { "relative_step":"True",
+        #                                                    "scale_parameter":"True",
+        #                                                    "warmup_init":"True" }
 
         # scheduler args
         # list of schedulers: linear, cosine, cosine_with_restarts, polynomial, constant, constant_with_warmup
-        self.scheduler: str = "cosine"
-        self.cosine_restarts: Union[int, None] = 1  # OPTIONAL, represents the number of times it restarts.
+        self.scheduler: str = "constant_with_warmup"
+        self.cosine_restarts: Union[int, None] = 2  # OPTIONAL, represents the number of times it restarts.
         # Only matters if you are using cosine_with_restarts
         self.scheduler_power: Union[float, None] = 1  # OPTIONAL, represents the power of the polynomial.
         # Only matters if you are using polynomial
 
         # learning rate args
-        self.learning_rate: Union[float, None] = 1e-4  # AdamW does not require this, some other optimizers do.
-        self.unet_lr: Union[float, None] = None  # OPTIONAL, Sets a specific lr for the unet, this overwrites
+        self.learning_rate: Union[float, None] = 1  # AdamW does not require this, some other optimizers do.
+        self.unet_lr: Union[float, None] = 1  # OPTIONAL, Sets a specific lr for the unet, this overwrites
         # the base lr in AdamW
-        self.text_encoder_lr: Union[float, None] = 5e-5  # OPTIONAL, Sets a specific lr for the text encoder,
+        self.text_encoder_lr: Union[float, None] = 1  # OPTIONAL, Sets a specific lr for the text encoder,
         # this overwrites the base lr in AdamW
-        self.warmup_lr_ratio: Union[float, None] = None  # OPTIONAL, Calculates the number of warmup steps based on the
+        self.warmup_lr_ratio: Union[float, None] = 1  # OPTIONAL, Calculates the number of warmup steps based on the
         # ratio given. Make sure to set this if you are using
         # constant_with_warmup, None to ignore
         self.unet_only: bool = False  # OPTIONAL, set it to only train the unet
 
         # general required arguments
-        self.net_dim: int = 128  # network dimension, 32 is default, but some people train at higher dims
-        self.alpha: float = 64  # represents the scalar for training. default is half of dim.
+        self.net_dim: int = 48   # network dimension, 32 is default, but some people train at higher dims
+        self.alpha: float = 24  # represents the scalar for training. default is half of dim.
         # if you want the older way of training, set this to dim
         self.train_resolution: int = 512
         self.height_resolution: Union[int, None] = None  # for if you want to train in a non-square resolution
-        self.batch_size: int = 8  # The number of images that get processed at one time, this is directly proportional
+        self.batch_size: int = 2  # The number of images that get processed at one time, this is directly proportional
         # to your vram and resolution. with 12gb of vram, at 512 reso,
         # you can get a maximum of 6 batch size
         self.clip_skip: int = 2  # If you are training on a model that is anime based,
@@ -92,7 +96,7 @@ class ArgStore:
         self.test_seed: int = 23  # this is the "reproducable seed", basically if you set the seed to this,
         # you should be able to input a prompt from one of your training images and
         # get a close representation of it
-        self.mixed_precision: str = "fp16"  # If you have the ability to use bf16, do it, it's better
+        self.mixed_precision: str = "bf16"  # If you have the ability to use bf16, do it, it's better
         self.save_precision: str = "fp16"  # You can also save in bf16, but because it's not universally supported,
         # I suggest you keep saving at fp16
 
@@ -136,7 +140,7 @@ class ArgStore:
 
         # tag args
         self.shuffle_captions: bool = True  # OPTIONAL, False to ignore
-        self.keep_tokens: Union[int, None] = 2  # OPTIONAL, None to ignore
+        self.keep_tokens: Union[int, None] = 3  # OPTIONAL, None to ignore
 
         # other somewhat useful args
         self.xformers: bool = True
@@ -393,7 +397,7 @@ class Parser:
         if 'optimizer_args' in args:
             name_space.optimizer_args = []
             for key, value in args['optimizer_args'].items():
-                if key == "betas" and args['optimizer_type'] in {"AdaFactor", "SGDNesterov", "SGDNesterov8bit", "DAdaptation(DAdaptAdam)", "DAdaptAdaGrad", "DAdaptAdan", "DAdaptSGD",}:
+                if key == "betas" and args['optimizer_type'] in {"AdaFactor", "SGDNesterov", "SGDNesterov8bit", "DAdaptation","DAdaptAdam", "DAdaptAdaGrad", "DAdaptAdan", "DAdaptSGD",}:
                     continue
                 name_space.optimizer_args.append(f"{key}={value}")
 

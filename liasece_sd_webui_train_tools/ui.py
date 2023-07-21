@@ -140,11 +140,11 @@ def new_ui():
                     with gr.Column():
                         train_batch_size = gr.Number(value=1, label="Batch size", elem_id="train_batch_size", interactive = True)
                         train_num_epochs = gr.Number(value=40, label="Number of epochs", elem_id="train_num_epochs", interactive = True)
-                        train_learning_rate = gr.Textbox(value="0.0001", label="Learning rate", elem_id="train_learning_rate", interactive = True)
+                        train_learning_rate = gr.Textbox(value="1", label="Learning rate", elem_id="train_learning_rate", interactive = True)
                     with gr.Column():
-                        train_net_dim = gr.Number(value=128, label="Net dim (128 ~ 144MB)", elem_id="train_net_dim", interactive = True)
-                        train_alpha = gr.Number(value=64, label="Alpha (default is half of Net dim)", elem_id="train_alpha", interactive = True)
-                        train_optimizer_type = gr.Dropdown(label="Optimizer type",value=["Lion"], choices=["AdamW", "AdamW8bit", "Lion8bit", "Lion", "SGDNesterov", "SGDNesterov8bit", "DAdaptation(DAdaptAdam)", "DAdaptAdaGrad", "DAdaptAdan", "DAdaptSGD", "AdaFactor"], multiselect = True, interactive = True, elem_id="train_optimizer_type")
+                        train_net_dim = gr.Number(value=48, label="Net dim (128 ~ 144MB)", elem_id="train_net_dim", interactive = True)
+                        train_alpha = gr.Number(value=24, label="Alpha (default is half of Net dim)", elem_id="train_alpha", interactive = True)
+                        train_optimizer_type = gr.Dropdown(label="Optimizer type",value=["DAdaptAdam"], choices=["AdamW", "AdamW8bit", "Lion8bit", "Lion", "SGDNesterov", "SGDNesterov8bit", "DAdaptation", "DAdaptAdam", "DAdaptAdaGrad", "DAdaptAdan", "DAdaptSGD", "AdaFactor"], multiselect = True, interactive = True, elem_id="train_optimizer_type")
                         train_mixed_precision = gr.Dropdown(label="Mixed precision (If your graphics card supports bf16 better)",value="fp16", choices=["fp16", "bf16"], interactive = True, elem_id="train_mixed_precision")
                 with gr.Row():
                     with gr.Column(scale=2):
