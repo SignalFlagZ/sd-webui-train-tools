@@ -140,7 +140,7 @@ class ArgStore:
 
         # tag args
         self.shuffle_captions: bool = True  # OPTIONAL, False to ignore
-        self.keep_tokens: Union[int, None] = 3  # OPTIONAL, None to ignore
+        self.keep_tokens: Union[int, None] = 1  # OPTIONAL, None to ignore
 
         # other somewhat useful args
         self.xformers: bool = True
